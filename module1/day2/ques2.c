@@ -1,21 +1,45 @@
+//exponent part of double variable
+
 #include <stdio.h>
 
-void swap(int *xp, int *yp)
+void printExponent(double num)
 {
-  int temp = *xp;
-  *xp = *yp;
-  *yp = temp;
+    unsigned long long exponent;
+    unsigned int hexExponent;
+
+    
+    memcpy(&exponent, &num, sizeof(exponent));
+
+    
+    exponent >>= 52;
+
+    
+    exponent &= 0x7FF;
+
+    
+    hexExponent = (unsigned int)exponent;
+
+   
+    printf("Exponent (Hex): 0x%03X\n", hexExponent);
+
+   
+    printf("Exponent (Binary): ");
+    for (int i = 11; i >= 0; i--)
+    {
+        int bit = (hexExponent >> i) & 1;
+        printf("%d", bit);
+    }
+    printf("\n");
 }
- 
 
 int main()
 {
-  int x, y;
-  printf("Enter Value of x ");
-  scanf("%d", &x);
-  printf("\nEnter Value of y ");
-  scanf("%d", &y);
-  swap(&x, &y);
-  printf("\nAfter Swapping: x = %d, y = %d", x, y);
-  return 0;
+    double num;
+
+    printf("Enter a double number: ");
+    scanf("%lf", &num);
+
+    printExponent(num);
+
+    return 0;
 }
